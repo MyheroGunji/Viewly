@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Controller for handling review-related operations:
+ * writing, saving, editing, viewing, and deleting reviews.
+ */
 @Controller
 @RequestMapping("/review")
 public class ReviewController {
@@ -24,7 +28,9 @@ public class ReviewController {
     @Autowired
     private MovieService movieService;
 
-    // GET: review投稿用のフォーム表示
+    /**
+     * Display the review form with pre-filled movie data.
+     */
     @GetMapping("/write")
     public String showReviewForm(@RequestParam String title,
                                  @RequestParam String posterPath,
@@ -35,19 +41,14 @@ public class ReviewController {
                                  Model model) {
 
         System.out.println("=== showReviewForm called ===");
-        System.out.println("title: " + title);
-        System.out.println("posterPath: " + posterPath);
-        System.out.println("genre param: " + genre);
-        System.out.println("tmdbId param: " + tmdbId);
-        System.out.println("duration param: " + duration);
-        System.out.println("type param: " + type);
 
         Review review = new Review();
         review.setTitle(title);
         review.setTmdbId(tmdbId);
         review.setPosterPath(posterPath);
-        review.setRating(5.0); // 仮の初期値
+        review.setRating(5.0); // Default rating
 
+        // Try to enrich movie details using TMDB ID and type
         if (tmdbId != null && type != null) {
             MovieDTO dto = new MovieDTO();
             try {
@@ -57,25 +58,27 @@ public class ReviewController {
                 review.setDuration(dto.getDuration());
                 review.setType(type);
             } catch (NumberFormatException e) {
-                System.err.println("tmdbId is not a number: " + tmdbId);
+                // Fallback if tmdbId is not a number
                 review.setGenre(genre != null ? genre : "Unknown");
                 review.setDuration(duration != null ? duration : 0);
             } catch (Exception e) {
-                System.err.println("Error in enrichMovieDetails: " + e.getMessage());
-                e.printStackTrace();
+                // Fallback if enrichment fails
                 review.setGenre(genre != null ? genre : "Unknown");
                 review.setDuration(duration != null ? duration : 0);
             }
         } else {
+            // Use provided genre and duration if enrichment is not possible
             review.setGenre(genre != null ? genre : "Unknown");
             review.setDuration(duration != null ? duration : 0);
         }
 
         model.addAttribute("review", review);
-        return "review";
+        return "review"; // View for writing a review
     }
 
-    // 自分のレビュー一覧を表示（マイページ）
+    /**
+     * Display the logged-in user's reviews on their personal page.
+     */
     @GetMapping("/reviews")
     public String showReviews(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
@@ -84,7 +87,9 @@ public class ReviewController {
         return "mypage/reviews";
     }
 
-    // POST: レビュー保存
+    /**
+     * Save a new review submitted by the user.
+     */
     @PostMapping("/save")
     public String saveReview(@ModelAttribute Review review,
                              @AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -92,22 +97,14 @@ public class ReviewController {
         review.setUsername(userDetails.getUsername());
         review.setCreatedAt(LocalDateTime.now());
 
-        System.out.println("=== Saving review ===");
-        System.out.println("title: " + review.getTitle());
-        System.out.println("posterPath: " + review.getPosterPath());
-        System.out.println("content: " + review.getContent());
-        System.out.println("username: " + review.getUsername());
-        System.out.println("rating: " + review.getRating());
-        System.out.println("genre: " + review.getGenre());
-        System.out.println("duration: " + review.getDuration());
-
         reviewRepository.save(review);
-
         model.addAttribute("message", "Saved!");
-        return "saved";
+        return "saved"; // Confirmation page
     }
 
-    // GET: 編集フォームを表示
+    /**
+     * Display the edit form for a specific review.
+     */
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id,
                                @AuthenticationPrincipal UserDetails userDetails,
@@ -120,7 +117,9 @@ public class ReviewController {
         return "edit-review";
     }
 
-    // POST: レビューを更新
+    /**
+     * Update an existing review.
+     */
     @PostMapping("/update")
     public String updateReview(@ModelAttribute Review review,
                                @AuthenticationPrincipal UserDetails userDetails) {
@@ -132,11 +131,7 @@ public class ReviewController {
         existing.setContent(review.getContent());
         existing.setRating(review.getRating());
         existing.setCreatedAt(LocalDateTime.now());
-
-        // ⚠️ duration（nullなら0にする保険）
         existing.setDuration(review.getDuration() != null ? review.getDuration() : 0);
-
-        // genre/typeも必要なら更新（任意）
         existing.setGenre(review.getGenre());
         existing.setType(review.getType());
 
@@ -144,8 +139,9 @@ public class ReviewController {
         return "redirect:/review/reviews";
     }
 
-
-    // GET: レビューを削除
+    /**
+     * Delete a review by ID.
+     */
     @GetMapping("/delete/{id}")
     public String deleteReview(@PathVariable Long id,
                                @AuthenticationPrincipal UserDetails userDetails) {

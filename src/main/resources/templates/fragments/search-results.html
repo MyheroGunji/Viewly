@@ -19,14 +19,14 @@
               <p class="card-text" th:text="${movie.overview}"></p>
 
               <!-- 公開日 -->
-              <p class="card-text mb-1 text-muted">
+              <p class="card-text mb-1">
                 <small th:text="'Release: ' + ${movie.releaseDate}"></small>
               </p>
 
               <!-- 評価 -->
               <div class="d-flex align-items-center gap-2 mt-2">
                 <div class="rating-stars" th:attr="data-rating=${movie.voteAverage}"></div>
-                <small class="text-muted" th:text="'(' + ${movie.voteAverage} + '/10)'"></small>
+                <small style="color: #ffffff;" th:text="'(' + ${movie.voteAverage} + '/10)'"></small>
               </div>
 
               <!-- ボタン -->

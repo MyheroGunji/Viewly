@@ -39,6 +39,7 @@ public class WatchlistController {
         return "redirect:/mypage/watchlist";  // mypageにある一覧ページへリダイレクト
     }
 
+    // Display the user's watchlist
     @GetMapping("/mylist")
     public String viewMyWatchlist(Model model,
                                   @AuthenticationPrincipal UserDetails userDetails) {
@@ -47,6 +48,7 @@ public class WatchlistController {
         return "mypage/watchlist";  // このHTMLに表示
     }
 
+    // Remove a movie from the watchlist via AJAX
     @DeleteMapping("/remove/{id}")
     @ResponseBody
     public String removeFromWatchlistAjax(@PathVariable Long id,

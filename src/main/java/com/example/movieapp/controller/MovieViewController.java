@@ -22,8 +22,8 @@ public class MovieViewController {
     public String search(@RequestParam("query") String query, Model model) {
         List<MovieDTO> movies = movieService.searchMovies(query);
         model.addAttribute("movies", movies);
-        model.addAttribute("type", "movie"); // ← 追加
-        return "index"; // Thymeleafテンプレートへ渡す
+        model.addAttribute("type", "movie"); // ← add
+        return "index"; // Pass to the Thymeleaf template
     }
 
     @GetMapping

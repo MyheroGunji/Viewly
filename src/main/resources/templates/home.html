@@ -105,6 +105,10 @@
         border: none;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+    h6 {
+    color: #fff !important;
+    }
+
     .movie-card:hover {
         transform: translateY(-6px) scale(1.02);
         box-shadow: 0 6px 15px rgba(0,0,0,0.1);
@@ -112,22 +116,25 @@
     .movie-card img {
         border-radius: 8px 8px 0 0;
         width: 100%;
-        object-fit: cover;
     }
     .popular-now .card-img-top {
       width: 80%;         /* 横幅を90%に縮小 */
       aspect-ratio: 2 / 3;
+      object-fit: cover;
       border-radius: 8px;
+      object-fit: cover;
+
       margin: 0 auto;     /* 中央寄せ */
       display: block;     /* 余白中央寄せのため */
     }
-
     /* スマホ表示では少し小さめに */
     @media (max-width: 768px) {
       .popular-now .card-img-top {
         aspect-ratio: 2 / 3; /* 比率は同じ */
       }
     }
+
+
 
     /* フェードイン用アニメーション */
     .fade-in {
@@ -147,7 +154,7 @@
 <!-- ナビバー -->
 <th:block th:replace="fragments/header :: navbar"></th:block>
 
-<!-- Hero Section -->
+<!-- Top Section -->
 <section class="wrapper hero py-5">
   <div class="image-wrapper position-relative">
     <img src="/images/theme1.png" alt="Hero Background">
@@ -253,7 +260,7 @@
           <img src="/images/movie1.jpg" class="card-img-top" alt="Movie 1">
           <div class="card-body text-center">
             <h6 class="fw-bold mb-0">The Fantastic Four: First Steps</h6>
-            <small class="text-muted">⭐ 8.2/10</small>
+            <small  style="color: #ffffff;">⭐ 8.2/10</small>
           </div>
         </div>
       </div>
@@ -262,7 +269,7 @@
           <img src="/images/movie3.jpg" class="card-img-top" alt="Movie 2">
           <div class="card-body text-center">
             <h6 class="fw-bold mb-0">Materialists</h6>
-            <small class="text-muted">⭐ 7.9/10</small>
+            <small  style="color: #ffffff;">⭐ 7.9/10</small>
           </div>
         </div>
       </div>
@@ -271,7 +278,7 @@
           <img src="/images/movie4.jpg" class="card-img-top" alt="Movie 3">
           <div class="card-body text-center">
             <h6 class="fw-bold mb-0">Super Bad</h6>
-            <small class="text-muted">⭐ 8.1/10</small>
+            <small  style="color: #ffffff;">⭐ 8.1/10</small>
           </div>
         </div>
       </div>
@@ -280,7 +287,7 @@
           <img src="/images/movie5.jpg" class="card-img-top" alt="Movie 4" >
           <div class="card-body text-center">
             <h6 class="fw-bold mb-0">Weapons</h6>
-            <small class="text-muted">⭐ 8.0/10</small>
+            <small  style="color: #ffffff;">⭐ 8.0/10</small>
           </div>
         </div>
       </div>
