@@ -17,7 +17,10 @@ A personal movie and TV tracking app where users can search titles via TMDB API,
 
 ##  Screenshots
 
-> (*Insert images here from your `/static/img` folder or screenshots directory.*)
+> <img width="2530" height="1260" alt="Screenshot 2025-08-05 055343" src="https://github.com/user-attachments/assets/2f350742-5137-472c-a1d0-27531393e3a0" />
+> <img width="2522" height="1251" alt="Screenshot 2025-08-05 054031" src="https://github.com/user-attachments/assets/8c45744e-b13c-4a13-b988-36a0911cfb34" />
+
+
 
 ---
 
